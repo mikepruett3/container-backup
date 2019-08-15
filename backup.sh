@@ -41,11 +41,13 @@ while [ "$#" -gt 0 ]; do
 done
 
 if [[ "$NonInteractive" -eq 1 ]]; then
-    User=$(id -u -n)
-    Group=$(id -g -n)
+    #User=$(id -u -n)
+    #Group=$(id -g -n)
     containers
 fi
 
+# https://dzone.com/articles/demystifying-the-data-volume-storage-in-docker
 VOLUMES=$(docker inspect --format '{{json .Mounts}}' $Container | python -m json.tool)
 
+# https://stackoverflow.com/questions/1955505/parsing-json-with-unix-tools
 echo $VOLUMES
