@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 # Variables
-BackupMount="/data/game-backups/$Container/"
+#BackupMount="/data/game-backups/$Container/"
+User=$(id -u -n)
+Group=$(id -g -n)
 TimeStamp=$(date +"%m-%d-%Y_%H-%M-%S")
 
 ## Borrowing code from another project - https://github.com/mikepruett3/terraria-scripts ##
@@ -31,13 +33,9 @@ while [ "$#" -gt 0 ]; do
             shift;
             Container=$1;
             ;;
-        -u)
+        -t)
             shift;
-            User=$1;
-            ;;
-        -g)
-            shift;
-            Group=$1;
+            BackupMount=$1;
             ;;
         *)  ;;
     esac
@@ -45,9 +43,8 @@ while [ "$#" -gt 0 ]; do
 done
 
 if [[ "$NonInteractive" -eq 1 ]]; then
-    User=$(id -u -n)
-    Group=$(id -g -n)
     containers
+    BackupMount="/data/game-backups/$Container/"
 fi
 
 # Retrieve array of Volumes from Container to backup
