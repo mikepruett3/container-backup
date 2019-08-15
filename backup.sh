@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Variables
+BackupMount="/data/game-backups/$Container/"
+TimeStamp=$(date +"%m-%d-%Y_%H-%M-%S")
+
 ## Borrowing code from another project - https://github.com/mikepruett3/terraria-scripts ##
 
 # Function to prompt for Container
@@ -46,10 +50,16 @@ if [[ "$NonInteractive" -eq 1 ]]; then
     containers
 fi
 
-## https://dzone.com/articles/demystifying-the-data-volume-storage-in-docker ##
 # Retrieve array of Volumes from Container to backup
-#VOLUMES=$(docker inspect --format '{{json .Mounts}}' $Container | python -m json.tool)
-VOLUMES=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[].Destination') )
+# - https://dzone.com/articles/demystifying-the-data-volume-storage-in-docker
+Volumes=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[].Destination') )
 
-# https://stackoverflow.com/questions/1955505/parsing-json-with-unix-tools
-echo ${VOLUMES[@]}
+# - https://stackoverflow.com/questions/1955505/parsing-json-with-unix-tools ##
+# - https://unix.stackexchange.com/questions/177843/parse-one-field-from-an-json-array-into-bash-array ##
+# echo ${Volumes[@]}
+
+# Create Backup of Volume
+docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu tar cvf "/backup/$Container-$TimeStamp.tar.gz" ${Volumes[@]}
+
+# Change Owner of Archive
+#sudo chown $User:$Group "$GameBackups/$Container-$TimeStamp.tar.gz"
