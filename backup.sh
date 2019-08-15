@@ -61,4 +61,4 @@ Volumes=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[].D
 docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu tar cvf "/backup/$Container-$TimeStamp.tar.gz" ${Volumes[@]}
 
 # Change Owner of Archive
-sudo chown $User:$Group "$GameBackups/$Container-$TimeStamp.tar.gz"
+sudo chown $User:$Group "$BackupMount/$Container-$TimeStamp.tar.gz"
