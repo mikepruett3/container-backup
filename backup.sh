@@ -33,9 +33,9 @@ while [ "$#" -gt 0 ]; do
             shift;
             Container=$1;
             ;;
-        -t)
+        -b)
             shift;
-            BackupMount=$1;
+            BackupMount="$1/$Container/";
             ;;
         *)  ;;
     esac
