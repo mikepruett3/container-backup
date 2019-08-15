@@ -46,8 +46,10 @@ if [[ "$NonInteractive" -eq 1 ]]; then
     containers
 fi
 
-# https://dzone.com/articles/demystifying-the-data-volume-storage-in-docker
-VOLUMES=$(docker inspect --format '{{json .Mounts}}' $Container | python -m json.tool)
+## https://dzone.com/articles/demystifying-the-data-volume-storage-in-docker ##
+# Retrieve array of Volumes from Container to backup
+#VOLUMES=$(docker inspect --format '{{json .Mounts}}' $Container | python -m json.tool)
+VOLUMES=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[].Destination') )
 
 # https://stackoverflow.com/questions/1955505/parsing-json-with-unix-tools
-echo $VOLUMES
+echo ${VOLUMES[@]}
