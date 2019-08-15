@@ -31,35 +31,34 @@ while [ "$#" -gt 0 ]; do
             shift;
             Container=$1;
             ;;
-        #-u)
-        #    shift;
-        #    User=$1;
-        #    ;;
-        #-g)
-        #    shift;
-        #    Group=$1;
-        #    ;;
+        -u)
+            shift;
+            User=$1;
+            ;;
+        -g)
+            shift;
+            Group=$1;
+            ;;
         *)  ;;
     esac
     shift
 done
 
 if [[ "$NonInteractive" -eq 1 ]]; then
-    #User=$(id -u -n)
-    #Group=$(id -g -n)
+    User=$(id -u -n)
+    Group=$(id -g -n)
     containers
 fi
 
 # Retrieve array of Volumes from Container to backup
 # - https://dzone.com/articles/demystifying-the-data-volume-storage-in-docker
+# - https://stackoverflow.com/questions/1955505/parsing-json-with-unix-tools
+# - https://unix.stackexchange.com/questions/177843/parse-one-field-from-an-json-array-into-bash-array
 Volumes=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[].Destination') )
-
-# - https://stackoverflow.com/questions/1955505/parsing-json-with-unix-tools ##
-# - https://unix.stackexchange.com/questions/177843/parse-one-field-from-an-json-array-into-bash-array ##
 # echo ${Volumes[@]}
 
 # Create Backup of Volume
 docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu tar cvf "/backup/$Container-$TimeStamp.tar.gz" ${Volumes[@]}
 
 # Change Owner of Archive
-#sudo chown $User:$Group "$GameBackups/$Container-$TimeStamp.tar.gz"
+sudo chown $User:$Group "$GameBackups/$Container-$TimeStamp.tar.gz"
