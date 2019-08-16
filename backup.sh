@@ -10,7 +10,7 @@ TimeStamp=$(date +"%m-%d-%Y_%H-%M-%S")
 ContainerTech="docker"
 
 function Load_Functions () {
-    for fn in $(find functions/$ContainerTech/ -name "*.sh"); do
+    for fn in $(find ../functions/$ContainerTech/ -name "*.sh"); do
         . $fn
     done
 }
