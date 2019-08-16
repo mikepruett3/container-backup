@@ -11,11 +11,11 @@ function get-volumes {
                     "/movies" \
                     "/3dmovies" \
                     "/anime-movies" \
+                    "/music-videos" \
                     "/tv" \
                     "/anime" \
                     "/hentai" \
                     "/music" \
-                    "/music-videos" \
                     "/comics" \
                     "/pre-roll" \
                     "/transcode" \
