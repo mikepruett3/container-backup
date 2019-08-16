@@ -5,7 +5,7 @@
 
 function get-volumes {
     Volumes=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[].Destination') )
-    # echo ${Volumes[@]}
+    # - https://stackoverflow.com/questions/16860877/remove-an-element-from-a-bash-array
     Exceptions=(    /downloads \
                     /Downloads \
                     /movies \
@@ -25,5 +25,5 @@ function get-volumes {
     do
         Volumes=("${Volumes[@]/$Exception}")
     done
-    echo ${Volumes[@]}
+    #echo ${Volumes[@]}
 }
