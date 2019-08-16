@@ -14,20 +14,6 @@ function Load_Functions () {
     done
 }
 
-# Function to prompt for Container
-#containers() {
-#    Containers=( $(docker container list --format '{{.Names}}') )
-#    echo "Listing Containers:"
-#    echo ""
-#    printf '%s\n' "${Containers[@]}"
-#    echo ""
-#    read -p "Which Container? > " Container
-#    if [[ $(printf "%s\n" "${Containers[@]}" | grep "^$Container$") == $NULL ]]; then
-#        echo "$Container not a valid Container!"
-#        exit 1
-#    fi
-#}
-
 if [ "$#" -eq 0 ]; then
     NonInteractive=1
 fi
@@ -57,8 +43,10 @@ fi
 # - https://dzone.com/articles/demystifying-the-data-volume-storage-in-docker
 # - https://stackoverflow.com/questions/1955505/parsing-json-with-unix-tools
 # - https://unix.stackexchange.com/questions/177843/parse-one-field-from-an-json-array-into-bash-array
-Volumes=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[].Destination') )
+#Volumes=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[].Destination') )
 # echo ${Volumes[@]}
+
+get-volumes
 
 # Create Backup of Volume
 docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu tar cvzf "/backup/$Container-$TimeStamp.tar.gz" ${Volumes[@]}
