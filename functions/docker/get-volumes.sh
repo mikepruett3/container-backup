@@ -6,8 +6,10 @@
 function get-volumes {
     Volumes=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[].Destination') )
     # - https://stackoverflow.com/questions/16860877/remove-an-element-from-a-bash-array
-    Exceptions=(    "/downloads" \
+    Exceptions=(    "/data" \
+                    "/downloads" \
                     "/Downloads" \
+                    "/incomplete-downloads" \
                     "/movies" \
                     "/3dmovies" \
                     "/anime-movies" \
@@ -21,7 +23,8 @@ function get-volumes {
                     "/transcode" \
                     "/timemachine" \
                     "/var/lib/motioneye" \
-                    "/etc/localtime" )
+                    "/etc/localtime" \
+                    "/dev/rtc" )
     for Exception in ${Exceptions[@]}
     do
         Volumes=("${Volumes[@]/$Exception}")
