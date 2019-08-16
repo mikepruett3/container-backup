@@ -12,6 +12,11 @@ for fn in $(find functions/$ContainerTech/ -name "*.sh"); do
     . $fn
 done
 
+# Load Base Function Scripts
+for fn in $(find functions/base/ -name "*.sh"); do
+    . $fn
+done
+
 if [ "$#" -eq 0 ]; then
     NonInteractive=1
 fi
