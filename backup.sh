@@ -50,7 +50,7 @@ fi
 get-volumes
 
 # Create Backup of Volume
-#docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu tar cvzf "/backup/$Container-$TimeStamp.tar.gz" ${Volumes[@]}
+docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu tar cvzf "/backup/$Container-$TimeStamp.tar.gz" ${Volumes[@]}
 
 # Change Owner of Archive
-#sudo chown $User:$Group "$BackupMount/$Container-$TimeStamp.tar.gz"
+sudo chown $User:$Group "$BackupMount/$Container-$TimeStamp.tar.gz"
