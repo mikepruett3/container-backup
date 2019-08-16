@@ -5,6 +5,8 @@ User=$(id -u -n)
 Group=$(id -g -n)
 TimeStamp=$(date +"%m-%d-%Y_%H-%M-%S")
 
+echo "$0"
+
 # Load Base Function Scripts
 for fn in $(find functions/base/ -name "*.sh"); do
     . $fn
@@ -50,7 +52,7 @@ fi
 get-volumes
 
 # Create Backup of Volume
-docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu tar cvzf "/backup/$Container-$TimeStamp.tar.gz" ${Volumes[@]}
+#docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu tar cvzf "/backup/$Container-$TimeStamp.tar.gz" ${Volumes[@]}
 
 # Change Owner of Archive
-sudo chown $User:$Group "$BackupMount/$Container-$TimeStamp.tar.gz"
+#sudo chown $User:$Group "$BackupMount/$Container-$TimeStamp.tar.gz"
