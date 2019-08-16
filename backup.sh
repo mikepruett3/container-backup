@@ -4,17 +4,16 @@
 User=$(id -u -n)
 Group=$(id -g -n)
 TimeStamp=$(date +"%m-%d-%Y_%H-%M-%S")
-Test=$(dirname $0)
-echo $Test
+ScriptBase=$(dirname $0)
 
 # Load Base Function Scripts
-for fn in $(find functions/base/ -name "*.sh"); do
+for fn in $(find $ScriptBase/functions/base/ -name "*.sh"); do
     . $fn
 done
 
 # Load Appropriate Function Scripts based on $ContainerTech
 ContainerTech="docker"
-for fn in $(find functions/$ContainerTech/ -name "*.sh"); do
+for fn in $(find $ScriptBase/functions/$ContainerTech/ -name "*.sh"); do
     . $fn
 done
 
