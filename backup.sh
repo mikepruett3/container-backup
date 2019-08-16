@@ -25,7 +25,12 @@ while [ "$#" -gt 0 ]; do
             ;;
         -b)
             shift;
-            BackupMount="$1/$Container/";
+            if [ -d $1 ]; then
+                BackupMount="$1/$Container/";
+            else
+                echo "$1 not a valid location!"
+                exit 1
+            fi
             ;;
         *)  ;;
     esac
@@ -34,15 +39,9 @@ done
 
 if [[ "$NonInteractive" -eq 1 ]]; then
     get-containers
-    BackupMount="/data/game-backups/$Container/"
+    get-backupmount
+    BackupMount="$BackupMountPoint/$Container/"
 fi
-
-# Retrieve array of Volumes from Container to backup
-# - https://dzone.com/articles/demystifying-the-data-volume-storage-in-docker
-# - https://stackoverflow.com/questions/1955505/parsing-json-with-unix-tools
-# - https://unix.stackexchange.com/questions/177843/parse-one-field-from-an-json-array-into-bash-array
-#Volumes=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[].Destination') )
-# echo ${Volumes[@]}
 
 get-volumes
 
