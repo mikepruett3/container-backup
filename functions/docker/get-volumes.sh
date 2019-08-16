@@ -6,7 +6,7 @@
 function get-volumes {
     Volumes=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[].Destination') )
     # echo ${Volumes[@]}
-    $Exceptions=(/downloads \
+    Exceptions=(    /downloads \
                     /Downloads \
                     /movies \
                     /3dmovies \
