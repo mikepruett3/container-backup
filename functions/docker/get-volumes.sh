@@ -6,4 +6,24 @@
 function get-volumes {
     Volumes=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[].Destination') )
     # echo ${Volumes[@]}
+    $Exceptions=(   /downloads \
+                    /Downloads \
+                    /movies \
+                    /3dmovies \
+                    /anime-movies \
+                    /tv \
+                    /anime \
+                    /hentai \
+                    /music \
+                    /music-videos \
+                    /comics \
+                    /pre-roll \
+                    /transcode \
+                    /timemachine \
+                    /var/lib/motioneye )
+    for Exception in ${Exceptions[@]}
+    do
+        Volumes=("${Volumes[@]/$Exception}")
+    done
+    echo ${Volumes[@]}
 }
