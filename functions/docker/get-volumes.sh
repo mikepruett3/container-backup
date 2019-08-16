@@ -20,7 +20,8 @@ function get-volumes {
                     "/pre-roll" \
                     "/transcode" \
                     "/timemachine" \
-                    "/var/lib/motioneye" )
+                    "/var/lib/motioneye" \
+                    "/etc/localtime" )
     for Exception in ${Exceptions[@]}
     do
         Volumes=("${Volumes[@]/$Exception}")
