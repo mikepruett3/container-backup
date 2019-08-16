@@ -6,21 +6,26 @@ User=$(id -u -n)
 Group=$(id -g -n)
 TimeStamp=$(date +"%m-%d-%Y_%H-%M-%S")
 
-## Borrowing code from another project - https://github.com/mikepruett3/terraria-scripts ##
+# Load Appropriate Function Scripts based on $ContainerTech
+function Load_Functions () {
+    for fn in $(find functions/$ContainerTech/ -name "*.sh"); do
+        . $fn
+    done
+}
 
 # Function to prompt for Container
-containers() {
-    Containers=( $(docker container list --format '{{.Names}}') )
-    echo "Listing Containers:"
-    echo ""
-    printf '%s\n' "${Containers[@]}"
-    echo ""
-    read -p "Which Container? > " Container
-    if [[ $(printf "%s\n" "${Containers[@]}" | grep "^$Container$") == $NULL ]]; then
-        echo "$Container not a valid Container!"
-        exit 1
-    fi
-}
+#containers() {
+#    Containers=( $(docker container list --format '{{.Names}}') )
+#    echo "Listing Containers:"
+#    echo ""
+#    printf '%s\n' "${Containers[@]}"
+#    echo ""
+#    read -p "Which Container? > " Container
+#    if [[ $(printf "%s\n" "${Containers[@]}" | grep "^$Container$") == $NULL ]]; then
+#        echo "$Container not a valid Container!"
+#        exit 1
+#    fi
+#}
 
 if [ "$#" -eq 0 ]; then
     NonInteractive=1
@@ -43,7 +48,7 @@ while [ "$#" -gt 0 ]; do
 done
 
 if [[ "$NonInteractive" -eq 1 ]]; then
-    containers
+    get-containers
     BackupMount="/data/game-backups/$Container/"
 fi
 
@@ -55,7 +60,7 @@ Volumes=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[].D
 # echo ${Volumes[@]}
 
 # Create Backup of Volume
-docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu tar cvf "/backup/$Container-$TimeStamp.tar.gz" ${Volumes[@]}
+docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu tar cvzf "/backup/$Container-$TimeStamp.tar.gz" ${Volumes[@]}
 
 # Change Owner of Archive
 sudo chown $User:$Group "$BackupMount/$Container-$TimeStamp.tar.gz"
