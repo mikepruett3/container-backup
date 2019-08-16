@@ -25,5 +25,5 @@ function get-volumes {
     do
         Volumes=("${Volumes[@]/$Exception}")
     done
-    #echo ${Volumes[@]}
+    echo ${Volumes[@]}
 }
