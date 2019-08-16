@@ -4,8 +4,8 @@
 User=$(id -u -n)
 Group=$(id -g -n)
 TimeStamp=$(date +"%m-%d-%Y_%H-%M-%S")
-
-echo "$0"
+Test=$(dirname $0)
+echo $Test
 
 # Load Base Function Scripts
 for fn in $(find functions/base/ -name "*.sh"); do
