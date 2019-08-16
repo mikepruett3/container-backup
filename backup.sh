@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
 
 # Variables
-#BackupMount="/data/game-backups/$Container/"
 User=$(id -u -n)
 Group=$(id -g -n)
 TimeStamp=$(date +"%m-%d-%Y_%H-%M-%S")
 
-# Load Appropriate Function Scripts based on $ContainerTech
-ContainerTech="docker"
-for fn in $(find functions/$ContainerTech/ -name "*.sh"); do
+# Load Base Function Scripts
+for fn in $(find functions/base/ -name "*.sh"); do
     . $fn
 done
 
-# Load Base Function Scripts
-for fn in $(find functions/base/ -name "*.sh"); do
+# Load Appropriate Function Scripts based on $ContainerTech
+ContainerTech="docker"
+for fn in $(find functions/$ContainerTech/ -name "*.sh"); do
     . $fn
 done
 
