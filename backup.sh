@@ -7,7 +7,7 @@ Group=$(id -g -n)
 TimeStamp=$(date +"%m-%d-%Y_%H-%M-%S")
 
 # Load Appropriate Function Scripts based on $ContainerTech
-$ContainerTech="docker"
+ContainerTech="docker"
 
 function Load_Functions () {
     for fn in $(find functions/$ContainerTech/ -name "*.sh"); do
