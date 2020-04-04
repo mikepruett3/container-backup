@@ -48,7 +48,7 @@ if [[ "$NonInteractive" -eq 1 ]]; then
     BackupMount="$BackupMountPoint/$Container/"
 fi
 
-get-volumes
+get-binds
 
 # Create Backup of Volume
 docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu tar cvzf "/backup/$Container-$TimeStamp.tar.gz" ${Volumes[@]}
