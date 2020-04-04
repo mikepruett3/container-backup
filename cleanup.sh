@@ -25,4 +25,4 @@ while [ "$#" -gt 0 ]; do
 done
 
 # Delete Archive files older than $Days
-find "$BackupMount" -name "*.tar.gz" -mtime "+$Days" -print
+find "$BackupMount" -name "*.tar.gz" -mtime "+$Days" -print -delete
