@@ -56,7 +56,9 @@ get-binds
 
 # List the latest backups avaliable in the directory, or select the latest if true
 echo $Latest
-if [[ "$Latest" == false ]]; then
+if [[ "$Latest" == true ]]; then
+    Backup=($(ls -1t $BackupMount | head -n 1))
+else
     Backups=($(ls -1t $BackupMount | head -n 3))
     echo "Listing Avaliable Backups:"
     echo ""
@@ -67,8 +69,6 @@ if [[ "$Latest" == false ]]; then
         echo "$Backup not a valid Backup file!"
         exit 1
     fi
-else
-    Backup=($(ls -1t $BackupMount | head -n 1))
 fi 
 
 # Restore Volumes from Backup
