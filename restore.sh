@@ -37,6 +37,10 @@ while [ "$#" -gt 0 ]; do
                 exit 1
             fi
             ;;
+        -l)
+            shift;
+            Latest=true;
+            ;;
         *)  ;;
     esac
     shift
@@ -50,17 +54,21 @@ fi
 
 get-binds
 
-# List the latest backups avaliable in the directory
-Backups=($(ls -1t $BackupMount | head -n 3))
-echo "Listing Avaliable Backups:"
-echo ""
-printf '%s\n' "${Backups[@]}"
-echo ""
-read -p "Which Backup file to Restore? > " Backup
-if [[ $(printf "%s\n" "${Backups[@]}" | grep "^$Backup$") == $NULL ]]; then
-    echo "$Backup not a valid Backup file!"
-    exit 1
-fi
+# List the latest backups avaliable in the directory, or select the latest if true
+if [ "$bool" = false ]; then
+    Backups=($(ls -1t $BackupMount | head -n 3))
+    echo "Listing Avaliable Backups:"
+    echo ""
+    printf '%s\n' "${Backups[@]}"
+    echo ""
+    read -p "Which Backup file to Restore? > " Backup
+    if [[ $(printf "%s\n" "${Backups[@]}" | grep "^$Backup$") == $NULL ]]; then
+        echo "$Backup not a valid Backup file!"
+        exit 1
+    fi
+else
+    Backup=($(ls -1t $BackupMount | head -n 1))
+fi 
 
 # Restore Volumes from Backup
 #docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu bash -c "cd / && tar xvf /backup/$Backup"
