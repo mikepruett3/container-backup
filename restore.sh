@@ -55,7 +55,7 @@ fi
 get-binds
 
 # List the latest backups avaliable in the directory, or select the latest if true
-if [ "$bool" = false ]; then
+if [ "$Latest" = false ]; then
     Backups=($(ls -1t $BackupMount | head -n 3))
     echo "Listing Avaliable Backups:"
     echo ""
