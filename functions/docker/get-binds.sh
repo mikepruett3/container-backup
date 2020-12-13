@@ -6,8 +6,7 @@
 function get-binds {
     Volumes=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[] | select(.Type=="volume").Destination') )
     # - https://stackoverflow.com/questions/16860877/remove-an-element-from-a-bash-array
-    Exceptions=(    "/data" \
-                    "/downloads" \
+    Exceptions=(    "/downloads" \
                     "/Downloads" \
                     "/incomplete-downloads" \
                     "/movies" \
