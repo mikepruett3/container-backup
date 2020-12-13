@@ -71,5 +71,5 @@ else
 fi
 
 # Restore Volumes from Backup
-#docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu bash -c "cd / && tar xvf /backup/$Backup"
-echo docker run --rm --volumes-from "$Container" -v "$BackupMount":/backup ubuntu bash -c "cd / && tar xvf /backup/$Backup"
+docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu bash -c "cd / && tar xvf /backup/$Backup"
+#echo docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu bash -c "cd / && tar xvf /backup/$Backup"
