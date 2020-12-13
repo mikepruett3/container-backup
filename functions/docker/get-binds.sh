@@ -4,7 +4,7 @@
 # - https://unix.stackexchange.com/questions/177843/parse-one-field-from-an-json-array-into-bash-array
 
 function get-binds {
-    Volumes=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[].Destination') )
+    Volumes=( $(docker inspect --format '{{json .Mounts}}' $Container | jq -r '.[] | select(.Type=="volume").Destination') )
     # - https://stackoverflow.com/questions/16860877/remove-an-element-from-a-bash-array
     Exceptions=(    "/data" \
                     "/downloads" \
