@@ -51,7 +51,7 @@ fi
 get-binds
 
 # List the latest backups avaliable in the directory
-Backups=( ls -1t $BackupMount | head -n 3 )
+Backups=($(ls -1t $BackupMount | head -n 3))
 echo "Listing Avaliable Backups:"
 echo ""
 printf '%s\n' "${Backups[@]}"
