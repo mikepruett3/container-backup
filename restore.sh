@@ -55,7 +55,6 @@ fi
 get-binds
 
 # List the latest backups avaliable in the directory, or select the latest if true
-echo $Latest
 if [[ "$Latest" == true ]]; then
     Backup=($(ls -1t $BackupMount | head -n 1))
 else
@@ -69,7 +68,7 @@ else
         echo "$Backup not a valid Backup file!"
         exit 1
     fi
-fi 
+fi
 
 # Restore Volumes from Backup
 #docker run --rm --volumes-from $Container -v $BackupMount:/backup ubuntu bash -c "cd / && tar xvf /backup/$Backup"
