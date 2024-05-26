@@ -8,13 +8,13 @@ ScriptBase=$(dirname $0)
 
 # Load Base Function Scripts
 for fn in $(find $ScriptBase/functions/base/ -name "*.sh"); do
-    . $fn
+    source $fn
 done
 
 # Load Appropriate Function Scripts based on $ContainerTech
 ContainerTech="docker"
 for fn in $(find $ScriptBase/functions/$ContainerTech/ -name "*.sh"); do
-    . $fn
+    source $fn
 done
 
 # Check Parameters
