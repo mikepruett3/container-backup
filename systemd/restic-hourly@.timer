@@ -1,0 +1,10 @@
+[Unit]
+# the timer, enabled as restic-hourly@your-repo.timer, will trigger
+# restic-hourly@your-repo.service
+Description=Run Restic Hourly Backup
+
+[Timer]
+OnCalendar=hourly
+
+[Install]
+WantedBy=timers.target
