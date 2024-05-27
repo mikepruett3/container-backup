@@ -1,0 +1,10 @@
+[Unit]
+# the timer, enabled as restic-monthly@your-repo.timer, will trigger
+# restic-monthly@your-repo.service
+Description=Run Restic Monthly Backup
+
+[Timer]
+OnCalendar=monthly
+
+[Install]
+WantedBy=timers.target

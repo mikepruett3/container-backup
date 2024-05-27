@@ -1,0 +1,10 @@
+[Unit]
+# the timer, enabled as restic-daily@your-repo.timer, will trigger
+# restic-daily@your-repo.service
+Description=Run Restic Daily Backup
+
+[Timer]
+OnCalendar=daily
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,10 @@
+[Unit]
+# the timer, enabled as restic-weekly@your-repo.timer, will trigger
+# restic-weekly@your-repo.service
+Description=Run Restic Weekly Backup
+
+[Timer]
+OnCalendar=weekly
+
+[Install]
+WantedBy=timers.target

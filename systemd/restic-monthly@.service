@@ -1,0 +1,19 @@
+[Unit]
+# this unit can be activated with a parameter, e.g. in
+#   systemctl start restic-monthly@your-repo.service
+# %I is "your-repo"
+Description=Restic Monthly Backup on %I
+After=syslog.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=restic
+# source repo and password from /etc/restic/your-repo.env
+EnvironmentFile=/etc/restic/container.env
+AmbientCapabilities=CAP_DAC_READ_SEARCH
+# runs restic backup on the files listed in /etc/restic/your-repo.files
+ExecStart=/usr/local/src/container-backup/restic-backup.sh -c %I
+
+[Install]
+WantedBy=multi-user.target
