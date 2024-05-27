@@ -48,7 +48,6 @@ printf '%s\n' "${Volumes[@]}" > $VolumeFile
 # Create Backup of Volume
 docker run --rm \
     --hostname $Container \
-    -ti \
     --volumes-from $Container \
     -e GOOGLE_PROJECT_ID=$GOOGLE_PROJECT_ID \
     -e GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS \
@@ -59,3 +58,5 @@ docker run --rm \
     restic/restic \
     backup \
     --files-from /volumes.txt \
+
+#    -ti \
