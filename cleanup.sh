@@ -2,6 +2,7 @@
 
 # Variables
 ScriptBase=$(dirname $0)
+extenstions=( "*.zip" "*.tar.gz" "*.tar" )
 
 # Check Parameters
 while [ "$#" -gt 0 ]; do
@@ -24,5 +25,8 @@ while [ "$#" -gt 0 ]; do
     shift
 done
 
-# Delete Archive files older than $Days
-find "$BackupMount" -name "*.tar.gz" -mtime "+$Days" -print -delete
+for i in "${extensions[@]}"
+do
+   # Delete Archive files older than $Days
+   find "$BackupMount" -name "$i" -mtime "+$Days" -print -delete
+done
