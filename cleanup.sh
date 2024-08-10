@@ -27,6 +27,8 @@ done
 
 for i in "${extensions[@]}"
 do
-   # Delete Archive files older than $Days
-   find "$BackupMount" -name "$i" -mtime "+$Days" -print -delete
+    :
+    echo "$i"
+    # Delete Archive files older than $Days
+    find "$BackupMount" -name "$i" -mtime "+$Days" -print -delete
 done
